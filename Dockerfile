@@ -22,14 +22,14 @@ RUN yum -y install bash sudo which openssh-clients \
 RUN yum clean all 
 
 RUN chmod 755 /start.sh
-RUN ./start.sh gpadmin changeme
+RUN ./sh/start.sh gpadmin changeme
 RUN mkdir -p /home/gpadmin/.ssh
 
 RUN ssh-keygen  -f /home/gpadmin/.ssh/id_rsa -N ""
 
-ADD ./gpinitsystem_config_template /home/gpadmin/gpinitsystem_config_template
-ADD ./prepare.sh /home/gpadmin/prepare.sh
-ADD ./cleanup.sh /home/gpadmin/cleanup.sh
+ADD ./sh/gpinitsystem_config_template /home/gpadmin/gpinitsystem_config_template
+ADD ./sh/prepare.sh /home/gpadmin/prepare.sh
+ADD ./sh/cleanup.sh /home/gpadmin/cleanup.sh
 ADD ./greenplum-db-5.8.1-rhel7-x86_64.rpm  /home/gpadmin/greenplum-db-5.8.1-rhel7-x86_64.rpm
 
 RUN chmod 755 /home/gpadmin/prepare.sh
@@ -37,6 +37,7 @@ RUN chmod 755 /home/gpadmin/cleanup.sh
 
 RUN rpm -i /home/gpadmin/greenplum-db-5.8.1-rhel7-x86_64.rpm
 RUN rm -f /home/gpadmin/greenplum-db-5.8.1-rhel7-x86_64.rpm
+
 RUN mkdir -p /home/gpadmin/master /home/gpadmin/data  /home/gpadmin/mirror
 
 RUN chown -R gpadmin /home/gpadmin
