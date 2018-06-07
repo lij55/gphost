@@ -17,9 +17,13 @@ RUN mkdir /var/run/sshd
 
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' 
 
-RUN yum -y install bash sudo which openssh-clients \
-		net-tools less iproute
+RUN yum -y install bash sudo
+RUN yum install -y epel-release  which openssh-clients \
+		net-tools less iproute m4 libevent apr-util
+RUN yum install -y python-pip python-psutil
+RUN pip install --no-cache-dir lockfile paramiko setuptools
 RUN yum clean all 
+RUN rm -rf /var/cache/yum
 
 RUN chmod 755 /start.sh
 RUN /start.sh gpadmin changeme
@@ -30,13 +34,11 @@ RUN ssh-keygen  -f /home/gpadmin/.ssh/id_rsa -N ""
 ADD ./sh/gpinitsystem_config_template /home/gpadmin/gpinitsystem_config_template
 ADD ./sh/prepare.sh /home/gpadmin/prepare.sh
 ADD ./sh/cleanup.sh /home/gpadmin/cleanup.sh
-ADD ./greenplum-db.rpm  /home/gpadmin/greenplum-db.rpm
 
 RUN chmod 755 /home/gpadmin/prepare.sh
 RUN chmod 755 /home/gpadmin/cleanup.sh
 
-RUN rpm -i /home/gpadmin/greenplum-db.rpm
-RUN rm -f /home/gpadmin/greenplum-db.rpm
+ADD ./greenplum-db /usr/local/gpdb
 
 RUN mkdir -p /home/gpadmin/master /home/gpadmin/data  /home/gpadmin/mirror
 
