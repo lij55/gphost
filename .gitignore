@@ -1,2 +1,3 @@
 *.rpm
 greenplum-db/
+gpdata/*
