@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mdw:
+    hostname: mdw
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/master
+    ports:
+     - "5222:22"
+     - "5432:5432"
+  sdw1:
+    hostname: sdw1
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/data
+  sdw2:
+    hostname: sdw2
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/data
+  etl:
+    hostname: etl
+    image: "mygreenplum"
