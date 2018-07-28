@@ -26,14 +26,18 @@ RUN /start.sh gpadmin changeme
 RUN mkdir -p /home/gpadmin/.ssh
 
 RUN ssh-keygen  -f /home/gpadmin/.ssh/id_rsa -N ""
+RUN cp /home/gpadmin/.ssh/id_rsa.pub /home/gpadmin/.ssh/authorized_keys
+RUN chmod 0400 /home/gpadmin/.ssh/authorized_keys
 
 ADD ./sh/gpinitsystem_config_template /home/gpadmin/gpinitsystem_config_template
 ADD ./sh/prepare.sh /home/gpadmin/prepare.sh
 ADD ./sh/cleanup.sh /home/gpadmin/cleanup.sh
+ADD ./sh/config /home/gpadmin/.ssh/config
 ADD ./greenplum-db.rpm  /home/gpadmin/greenplum-db.rpm
 
 RUN chmod 755 /home/gpadmin/prepare.sh
 RUN chmod 755 /home/gpadmin/cleanup.sh
+RUN chmod 0400 /home/gpadmin/.ssh/config
 
 RUN rpm -i /home/gpadmin/greenplum-db.rpm
 RUN rm -f /home/gpadmin/greenplum-db.rpm
