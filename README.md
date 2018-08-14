@@ -1,8 +1,11 @@
 # Run commercial Greenplum with Docker
 
-Suppose rpm package of Pvital greenplum is downloaded and reanmed as **greenplum-db.rpm**. Run following command to build docker image.
+Suppose Centos7 RPM package of Pviotal greenplum5 is downloaded (from https://network.pivotal.io/products/pivotal-gpdb/) and reanmed as **greenplum-db.rpm**. Run following command to build docker image.
 
 ```bash
+$ git clone https://github.com/lij55/gphost.git
+$ cd gphost
+# download greenplum-db-5.x.y-rhel7-x86_64.rpm from pivnet and rename it to greenplum-db.rpm
 $ docker build . -t mygreenplum
 ```
 
@@ -31,9 +34,10 @@ services:
      - ./gpdata:/home/gpadmin/data
 ```
 
-Run with docker-compose
+Create the external volumes and run docker-compose
 
 ```bash
+mkdir gpdata
 docker-compose up -d
 ```
 
@@ -60,11 +64,7 @@ source /usr/local/greenplum-db/greenplum_path.sh
 
 `-s` means there are 2 segment hosts and `-n` means each segment host have 1 primary segment.
 
-It will create several configure files( `gpinitsystem_config`, `env.sh`, `hostfile`) for gpinitsystem. Then setup password-less login for Greenplum. The login passwords are also `changeme`.
-
-```bash
-gpssh-exkeys -f hostfile
-```
+It will create several configure files( `gpinitsystem_config`, `env.sh`, `hostfile`) for gpinitsystem. 
 
 Run following command to start Greenplum
 
