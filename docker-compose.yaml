@@ -18,6 +18,23 @@ services:
     image: "mygreenplum"
     volumes:
      - ./gpdata:/home/gpadmin/data
+  sdw3:
+    hostname: sdw3
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/data
+  sdw4:
+    hostname: sdw4
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/data
+  sdw5:
+    hostname: sdw5
+    image: "mygreenplum"
+    volumes:
+     - ./gpdata:/home/gpadmin/data
   etl:
     hostname: etl
     image: "mygreenplum"
+    ports:
+     - "8000:8000"
