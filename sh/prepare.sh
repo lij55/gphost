@@ -57,13 +57,13 @@ done
 
 
 CURDIR=$(cd $(dirname $0); pwd)
-CONFIGFILE=$CURDIR/gpinitsystem_config
+PREFIX=$(pwd)
+CONFIGFILE=$PREFIX/gpinitsystem_config
 CONFIGTEMPLATE=$CURDIR/gpinitsystem_config_template
-HOSTFILE=$CURDIR/hostfile
+HOSTFILE=$PREFIX/hostfile
 
 
 PORT_BASE=10000
-PREFIX=$CURDIR
 MASTER_PORT=5432
 MIRROR_PORT_BASE=30000
 REPLICATION_PORT_BASE=31000
@@ -91,7 +91,7 @@ else
     done
 fi
 
-cat <<EOF > $CURDIR/env.sh
+cat <<EOF > $PREFIX/env.sh
 source $GPHOME/greenplum_path.sh
 SRCDIR="\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
 export MASTER_DATA_DIRECTORY=\$SRCDIR/master/gpseg-1

@@ -3,38 +3,15 @@ services:
   mdw:
     hostname: mdw
     image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/master
     ports:
      - "5222:22"
      - "5432:5432"
   sdw1:
     hostname: sdw1
     image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  sdw2:
-    hostname: sdw2
+  amdw:
+    hostname: amdw
     image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  sdw3:
-    hostname: sdw3
+  asdw1:
+    hostname: asdw1
     image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  sdw4:
-    hostname: sdw4
-    image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  sdw5:
-    hostname: sdw5
-    image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  etl:
-    hostname: etl
-    image: "mygreenplum"
-    ports:
-     - "8000:8000"

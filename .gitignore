@@ -1,3 +1,4 @@
+*.gppkg
 *.rpm
 greenplum-db/
 gpdb/
