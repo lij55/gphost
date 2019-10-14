@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mdw:
+    hostname: mdw
+    image: "mygreenplum"
+    ports:
+     - "5222:22"
+     - "5432:5432"
+  sdw1:
+    hostname: sdw1
+    image: "mygreenplum"
+  sdw2:
+    hostname: sdw2
+    image: "mygreenplum"
+  sdw3:
+    hostname: sdw3
+    image: "mygreenplum"
+  etl:
+    hostname: etl
+    image: "mygreenplum"
+    ports:
+     - "8000:8000"
