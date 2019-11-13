@@ -16,6 +16,7 @@ ssh -p 5222 gpadmin@127.0.0.1
 #+END_SRC
 *** Config greenplum file
 #+BEGIN_SRC bash
+source /usr/local/greenplum-db/greenplum_path.sh
 artifact/prepare.sh -s 3 -n 2
 #+END_SRC
 - **s** means there are 3 segment containers (sdw1 to sdw3)
