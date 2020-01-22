@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mdw:
+    hostname: mdw
+    image: "mygp4"
+    ports:
+     - "4222:22"
+     - "4432:5432"
+  sdw1:
+    hostname: sdw1
+    image: "mygp4"
+  sdw2:
+    hostname: sdw2
+    image: "mygp4"
+  sdw3:
+    hostname: sdw3
+    image: "mygp4"
+  etl:
+    hostname: etl
+    image: "mygp4"

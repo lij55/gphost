@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e -x
 docker-compose stop && docker-compose rm -f
+rm -rf gpdata/*
 
-#rm -rf gpdata/*
 
-docker build . -t mygreenplum5
+docker build . -t mygreenplum
 
 docker-compose up -d
