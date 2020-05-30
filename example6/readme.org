@@ -2,7 +2,7 @@
 Before start, you need download  Centos7 RPM package from Pviotal ( https://network.pivotal.io/products/pivotal-gpdb/ ) and save it in this folder.
 ** Build docker image
 #+BEGIN_SRC bash
-docker build . -t mygreenplum
+docker build . -t mygreenplum6
 #+END_SRC
 ** Modify Cluster config
 ** Start container
