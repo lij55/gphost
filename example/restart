@@ -1,5 +1,0 @@
-#!/bin/bash
-set -x
-docker-compose stop
-docker-compose rm -f
-docker-compose up -d

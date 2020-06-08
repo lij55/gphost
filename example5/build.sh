@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e -x
-docker-compose stop && docker-compose rm -f
-
-#rm -rf gpdata/*
 
 docker build . -t mygreenplum5
 

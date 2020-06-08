@@ -4,30 +4,14 @@ services:
     hostname: mdw
     image: "mygreenplum6"
     ports:
-     - "2222:22"
-     - "5432:5432"
+     - "6222:22"
+     - "6432:5432"
   sdw1:
     hostname: sdw1
     image: "mygreenplum6"
   sdw2:
     hostname: sdw2
     image: "mygreenplum6"
-  sdw3:
-    hostname: sdw3
-    image: "mygreenplum6"
-  sdw4:
-    hostname: sdw4
-    image: "mygreenplum6"
-  sdw5:
-    hostname: sdw5
-    image: "mygreenplum6"
   etl:
     hostname: etl
     image: "mygreenplum6"
-    ports:
-     - "8006:8000"
-  kafkahost:
-    hostname: kafkahost
-    image: "mykafkahost"
-    ports:
-     - "9092:9092"
