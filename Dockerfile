@@ -21,7 +21,7 @@ RUN yum -y install bash sudo
 RUN yum install -y epel-release  which openssh-clients \
 		net-tools less iproute m4 libevent apr-util
 RUN yum install -y python-pip python-psutil
-RUN pip install --no-cache-dir lockfile paramiko setuptools
+#RUN pip install --no-cache-dir lockfile paramiko setuptools
 RUN yum clean all 
 RUN rm -rf /var/cache/yum
 
@@ -31,18 +31,12 @@ RUN mkdir -p /home/gpadmin/.ssh
 
 RUN ssh-keygen  -f /home/gpadmin/.ssh/id_rsa -N ""
 
-ADD ./sh/gpinitsystem_config_template /home/gpadmin/gpinitsystem_config_template
-ADD ./sh/prepare.sh /home/gpadmin/prepare.sh
-ADD ./sh/cleanup.sh /home/gpadmin/cleanup.sh
-
-RUN chmod 755 /home/gpadmin/prepare.sh
-RUN chmod 755 /home/gpadmin/cleanup.sh
-
-ADD ./greenplum-db /usr/local/gpdb
-
-RUN mkdir -p /home/gpadmin/master /home/gpadmin/data  /home/gpadmin/mirror
+ADD ./binary /opt/greenplum
+ADD ./sh/init.sh /init.sh
+#RUN mkdir -p /home/gpadmin/gpdata
 
 RUN chown -R gpadmin /home/gpadmin
 RUN chown -R gpadmin /home/gpadmin/.ssh
 
-ENTRYPOINT ["/usr/sbin/sshd", "-D"]
+EXPOSE 5432/tcp
+ENTRYPOINT ["runuser", "-l", "gpadmin", "-c", "/init.sh"]

@@ -1,72 +1,32 @@
-# Run Greenplum cluster in docker
-
-Suppose prebuild Greenplum is copied in folder **greenplum-db**. This folder will be mounted to folder /usr/local/gpdb. Please modify the path in greenplum_path.sh if needed. Run following command to build docker image first. Remember to give it a easier name to remember.
-
-```bash
-docker build . -t mygreenplum
-```
-
-Then modify docker-compose.yaml to create required cluster host. Default configure use 2 segment hosts.
-
-```yaml
-version: '3'
-services:
-  mdw:
-    hostname: mdw
-    image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/master
-    ports:
-     - "5222:22"
-     - "5432:5432"
-  sdw1:
-    hostname: sdw1
-    image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-  sdw2:
-    hostname: sdw2
-    image: "mygreenplum"
-    volumes:
-     - ./gpdata:/home/gpadmin/data
-```
-
-Run with docker-compose
-
-```bash
-docker-compose up -d
-```
-
-If you see following messages, it means your hosts are ready to run Greenplum.
+# Run OSS Greenplum in one step
+This repo provide the quickest way to run a Greenplum cluster in a single docker images.
+The cluster has 3 primary segment without standby master or mirrors.
 
 ```
-Creating gphost_sdw2_1 ... done
-Creating gphost_sdw1_1 ... done
-Creating gphost_mdw_1  ... done
+docker run -d -p 5432:5432 lyasper/greenplum:6
+```
+Now Greenplum is listening on your localhost 5432 port. Please noted the `gpadmin` users have privilige access without password.  **Never never use this in production**.
+
+# Build your own OSS Geenplum image
+
+If you are interested to build your own images, you may follow below steps.
+
+First step is to clone and checkout the oss branch
+```
+git clone https://github.com/lij55/gphost.git --branch oss
 ```
 
-Then login to master host of Greenplum with followng command with password `changeme`
-
-```bash
-ssh -p 5222 gpadmin@127.0.0.1
+Then build Greenplum binary first
+```
+export GPTAG=6.10.1
+mkdir binary
+git clone https://github.com/greenplum-db/gpdb.git --branch ${GPTAG} --single-branch --depth 1 gpdb_${GPTAG}
+docker run --rm -u gpadmin -it --workdir /home/gpadmin/gpdb_${GPTAG} -v `pwd`/gpdb_${GPTAG}:/home/gpadmin/gpdb_${GPTAG} -v `pwd`/binary:/opt/greenplum lyasper/gpdev  bash -c "sudo chown -R gpadmin /opt/greenplum && rm -rf /opt/greenplum/* && ./configure --prefix=/opt/greenplum --disable-orca --without-perl --with-python --with-libxml --without-gssapi --disable-pxf --without-zstd&& make -j8 && make install"
 ```
 
-It contains several script which could help to create configurations of Greenplum. Run following command under folder /home/gpadmin
+You may change the value of GPTAG to the version that you need. Please don't change the name of `binary` which is for the build result.
 
-```bash
-source /usr/local/gpdb/greenplum_path.sh
-./prepare.sh -s 2 -n 1
+Now its time to build the image
 ```
-
-It will create several configure files() `gpinitsystem_config`, `env.sh`, `hostfile`) for gpinitsystem. Then setup password-less login for Greenplum.
-
-```bash
-gpssh-exkeys -f hostfile
+docker build . -t greenplum_${GPTAG}
 ```
-
-Run following command to start Greenplum
-
-```bash
-gpinitsystem -a -c gpinitsystem_config
-```
-

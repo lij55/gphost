@@ -1,3 +1,5 @@
 *.rpm
 greenplum-db/
 gpdata/*
+binary/
+gpdb_*
