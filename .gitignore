@@ -3,3 +3,5 @@ greenplum-db/
 gpdata/*
 binary/
 gpdb_*
+.DS_Store
+rootfs.tar.gz
