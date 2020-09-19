@@ -74,9 +74,10 @@ FILE=/home/gpadmin/.gp_init_done
 if [ ! -f "$FILE" ]; then
     initgp /home/gpadmin
     echo "host all gpadmin 0.0.0.0/0 trust"  >> /home/gpadmin/data-master/pg_hba.conf
+    touch "$FILE"
 fi
 
-if [ ! -f "$FILE" ]; then
+if [ -f "$FILE" ]; then
     startgp /home/gpadmin
 fi
 
