@@ -10,8 +10,9 @@
 FROM centos:centos7
 
 RUN yum -y update
+RUN yum -y install epel-release
 RUN yum -y install openssh-server passwd bash sudo \
-        epel-release xerces-c which openssh-clients \
+                xerces-c which openssh-clients \
 		net-tools less iproute m4 libevent apr-util \
 		python-pip python-psutil python2-lockfile python-paramiko \
 		&& yum clean all && rm -rf /var/cache/yum
