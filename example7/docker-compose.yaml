@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mdw:
+    hostname: mdw
+    image: "mygreenplum7"
+    ports:
+     - "7222:22"
+     - "7432:5432"
+  sdw1:
+    hostname: sdw1
+    image: "mygreenplum7"
+  sdw2:
+    hostname: sdw2
+    image: "mygreenplum7"
+  sdw3:
+    hostname: sdw3
+    image: "mygreenplum7"
