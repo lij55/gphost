@@ -1,0 +1,37 @@
+* Setup Greenplum6 Cluster
+Before start, you need download  Centos7 RPM package from Pviotal ( https://network.pivotal.io/products/pivotal-gpdb/ ) and save it in this folder.
+** Build docker image
+#+BEGIN_SRC bash
+docker build . -t mygreenplum6
+#+END_SRC
+** Modify Cluster config
+Default cluster has 1 master, 2 segment and 1 etl host. you can change it by editing the docker-compose.yaml file.
+** Start container
+#+BEGIN_SRC bash
+docker-compose up -d
+#+END_SRC
+** Start Greenplum cluster
+*** Login to cluster
+#+BEGIN_SRC bash
+ssh -p 6222 gpadmin@127.0.0.1
+#+END_SRC
+Password is changeme
+*** Config greenplum file
+#+BEGIN_SRC bash
+artifact/prepare.sh -s 2 -n 2
+#+END_SRC
+- **s** means there are 2 segment containers (sdw1 to sdw3)
+- **n** means there are 2 primary segments on each container.
+
+It will create config file for gpinitsystem. Run following command:
+#+BEGIN_SRC bash
+gpinitsystem -a -c gpinitsystem_config
+#+END_SRC
+Now you can access your Greenplu with psql or other clients.
+*** Manage cluster
+Script **prepare.sh**  will also create file **env.sh** that we can source for Greenplum enviroments.
+#+BEGIN_SRC bash
+source env.sh
+gpstop -a
+gpstart -a
+#+END_SRC

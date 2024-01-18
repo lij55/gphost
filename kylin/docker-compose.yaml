@@ -2,17 +2,17 @@ version: '3'
 services:
   mdw:
     hostname: mdw
-    image: "mygreenplum6"
+    image: "kygp6"
     ports:
      - "6222:22"
      - "6432:5432"
      - "19001:19001"
   sdw1:
     hostname: sdw1
-    image: "mygreenplum6"
+    image: "kygp6"
   sdw2:
     hostname: sdw2
-    image: "mygreenplum6"
+    image: "kygp6"
   etl:
     hostname: etl
-    image: "mygreenplum6"
+    image: "kygp6"
