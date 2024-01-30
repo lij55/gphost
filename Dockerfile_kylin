@@ -1,7 +1,7 @@
 FROM lyasper/kylinsp2
 
 RUN yum -y install which openssh-clients \
-    net-tools less iproute \
+    net-tools less iproute hostname\
     && yum clean all 
 
 RUN mkdir -p /home/gpadmin/.ssh
